@@ -1,0 +1,64 @@
+public class Circulo2D {
+    // Atributos
+    private double x;
+    private double y;
+    private double radio;
+
+    // Constructor sin argumentos (círculo predeterminado)
+    public Circulo2D() {
+        this(0, 0, 1);
+    }
+
+    // Constructor con parámetros
+    public Circulo2D(double x, double y, double radio) {
+        this.x = x;
+        this.y = y;
+        this.radio = radio;
+    }
+
+    // Getters
+    public double getX() { return x; }
+    public double getY() { return y; }
+    public double getRadio() { return radio; }
+
+    // Métodos de cálculo
+    public double getArea() {
+        return Math.PI * radio * radio;
+    }
+
+    public double getPerimetro() {
+        return 2 * Math.PI * radio;
+    }
+
+    // Método: punto dentro del círculo
+    public boolean contiene(double px, double py) {
+        double distancia = Math.sqrt(Math.pow(px - x, 2) + Math.pow(py - y, 2));
+        return distancia <= radio;
+    }
+
+    // Método: un círculo dentro de otro
+    public boolean contiene(Circulo2D c) {
+        double distanciaCentros = Math.sqrt(Math.pow(c.x - x, 2) + Math.pow(c.y - y, 2));
+        return distanciaCentros + c.radio <= this.radio;
+    }
+
+    // Método: un círculo se sobrepone a otro
+    public boolean sobrepone(Circulo2D c) {
+        double distanciaCentros = Math.sqrt(Math.pow(c.x - x, 2) + Math.pow(c.y - y, 2));
+        return distanciaCentros < (this.radio + c.radio);
+    }
+
+
+
+    // Programa de prueba
+    public static void main(String[] args) {
+        Circulo2D c1 = new Circulo2D(2, 0, 1);
+
+        System.out.println("Area: " + c1.getArea());
+        System.out.println("Perimetro: " + c1.getPerimetro());
+
+        System.out.println("c1.contiene(2.5, 0): " + c1.contiene(2.5, 0));
+        System.out.println("c1.contiene(Circulo2D(2, 0, 0.5)): " + c1.contiene(new Circulo2D(2, 0, 0.5)));
+        System.out.println("c1.sobrepone(Circulo2D(0, 0, 2)): " + c1.sobrepone(new Circulo2D(0, 0, 2)));
+    }
+}
